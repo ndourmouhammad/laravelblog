@@ -19,6 +19,7 @@ class CommentaireController extends Controller
         $validated = $request->validate([
             'contenu' => 'required',
             'nom_complet_auteur' => 'required',
+            'date_heure_creation' => 'required|date',
         ]);
 
         $validated['article_id'] = $articleId;
@@ -38,6 +39,7 @@ class CommentaireController extends Controller
         $validated = $request->validate([
             'contenu' => 'required',
             'nom_complet_auteur' => 'required',
+            'date_heure_creation' => 'required|date',
         ]);
 
         $commentaire = Commentaire::findOrFail($id);
@@ -54,4 +56,3 @@ class CommentaireController extends Controller
         return redirect()->route('articles.show', $commentaire->article_id);
     }
 }
-

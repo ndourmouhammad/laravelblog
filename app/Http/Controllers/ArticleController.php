@@ -9,7 +9,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::with('commentaires')->get();
+        $articles = Article::all();
         return view('articles.index', compact('articles'));
     }
 
@@ -20,20 +20,35 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom' => 'required',
-            'description' => 'required',
+        // Valider les données entrantes
+        $validatedData = $request->validate([
+            'nom' => 'required|max:255',
+            'description' => 'required|string',
             'image_url' => 'required|url',
-            'a_la_une' => 'boolean',
+            'date_creation' => 'required|date',
+            
         ]);
-
-        Article::create($validated);
+    
+        // Créer une nouvelle instance de l'article avec les données validées
+        $article = new Article();
+        $article->nom = $validatedData['nom'];
+        $article->description = $validatedData['description'];
+        $article->image_url = $validatedData['image_url'];
+        $article->date_creation = $validatedData['date_creation'];
+        $article->a_la_une = $request->has('a_la_une');
+    
+        // Sauvegarder l'article
+        $article->save();
+    
+        // Rediriger vers la page d'index des articles
         return redirect()->route('articles.index');
     }
+    
+    
 
     public function show($id)
     {
-        $article = Article::with('commentaires')->findOrFail($id);
+        $article = Article::findOrFail($id);
         return view('articles.show', compact('article'));
     }
 
@@ -45,25 +60,25 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nom' => 'required',
-            'description' => 'required',
-            'image_url' => 'required|url',
-            'a_la_une' => 'boolean',
-        ]);
-
         $article = Article::findOrFail($id);
-        $article->update($validated);
-
+        
+        $article->nom = $request->input('nom');
+        $article->description = $request->input('description');
+        $article->image_url = $request->input('image_url');
+        $article->date_creation = $request->input('date_creation');
+        $article->a_la_une = $request->has('a_la_une');
+    
+        $article->update();
+    
         return redirect()->route('articles.index');
     }
+    
+
 
     public function destroy($id)
     {
         $article = Article::findOrFail($id);
         $article->delete();
-
         return redirect()->route('articles.index');
     }
 }
-
