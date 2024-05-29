@@ -18,7 +18,7 @@
             <div>
                 <p class="mb-2"><strong>Description :</strong> {{ $article->description }}</p>
                 <p class="mb-2"><strong>Date de création :</strong> {{ $article->date_creation }}</p>
-                <p class="mb-2"><strong>À la une :</strong> {{ $article->a_la_une ? 'Oui' : 'Non' }}</p>
+                <p class="mb-2 text-red-500"><strong>À la une :</strong> {{ $article->a_la_une ? 'Oui' : 'Non' }}</p>
             </div>
         </div>
 
@@ -27,6 +27,7 @@
             @foreach($article->commentaires as $commentaire)
                 <li class="bg-white shadow-md rounded-lg p-4 mb-4">
                     <p class="mb-2"><strong>{{ $commentaire->nom_complet_auteur }} :</strong> {{ $commentaire->contenu }}</p>
+                    <p class="mb-2">Ajouté le : {{ $commentaire->date_heure_creation }}</p>
                     <div class="flex items-center">
                         <a href="{{ route('commentaires.destroy', $commentaire->id) }}" class="text-red-500 mr-4">Supprimer</a>
                         <a href="{{ route('commentaires.edit', $commentaire->id) }}" class="text-yellow-500">Modifier</a>
