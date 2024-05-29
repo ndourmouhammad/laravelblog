@@ -9,13 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('articles', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   public function up()
+{
+    Schema::create('articles', function (Blueprint $table) {
+        $table->id();
+        $table->string('nom');
+        $table->text('description');
+        $table->string('image_url');
+        $table->timestamp('date_creation')->useCurrent();
+        $table->boolean('a_la_une');
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.
