@@ -28,11 +28,7 @@
                 <li class="bg-white shadow-md rounded-lg p-4 mb-4">
                     <p class="mb-2"><strong>{{ $commentaire->nom_complet_auteur }} :</strong> {{ $commentaire->contenu }}</p>
                     <div class="flex items-center">
-                        <form action="{{ route('commentaires.destroy', $commentaire->id) }}" method="POST" class="mr-4">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500">Supprimer</button>
-                        </form>
+                        <a href="{{ route('commentaires.destroy', $commentaire->id) }}" class="text-red-500 mr-4">Supprimer</a>
                         <a href="{{ route('commentaires.edit', $commentaire->id) }}" class="text-yellow-500">Modifier</a>
                     </div>
                 </li>

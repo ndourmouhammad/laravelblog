@@ -17,11 +17,7 @@
                     <a href="{{ route('articles.show', $article->id) }}" class="text-blue-500">{{ $article->nom }}</a>
                     <div>
                         
-                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 mr-4">Supprimer</button>
-                        </form>
+                        <a href="{{ route('articles.destroy', $article->id) }}" class="text-red-500 mr-4">Supprimer</a>
                         
                         <a href="{{ route('articles.edit', $article->id) }}" class="text-yellow-500">Modifier</a>
                     </div>
